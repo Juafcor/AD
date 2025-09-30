@@ -1,3 +1,0 @@
-2025-09-17;13:01:33;excepción test1;usuario1
-2025-09-16;14:21:13;excepción test2;usuario2
-2025-09-18;17:01:53;excepción test3;usuario1
