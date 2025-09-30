@@ -6,39 +6,75 @@ import servicio.ServicioFichero;
 import vista.Escaner;
 import vista.Consola;
 
- public class ControladorIncidencias {
-    private static boolean salir=false;
+public class ControladorIncidencias {
+    private static boolean salir = false;
     private static String usuario;
     private static String numero;
-    private static int eleccion;
-
+    private static String eleccion;
 
     public static void iniciar() {
         Consola.mostrarTitulo("Gestor de Excepciones");
-        Escaner.pedirString("Introduce el nombre de usuario:");
+
+        usuario = Escaner.pedirString("Introduce el nombre de usuario:");
         Consola.mostrarExito("Usuario recibido: " + usuario);
+
         do {
-            Escaner.pedirString("1. Pedir número. | 2. Buscar por usuario. | 3. Buscar por fecha");
+            eleccion = Escaner.pedirString(
+                    "Menú principal:\n" +
+                            "1. Pedir número\n" +
+                            "2. Buscar por usuario\n" +
+                            "3. Buscar por fecha\n" +
+                            "0. Salir\n" +
+                            "Elige una opción: "
+            );
+
             switch (eleccion) {
-                case 1:
-                    Escaner.pedirString("1. Pedir número");
+                case "1":
+                    numero = Escaner.pedirString("Introduce un número (1-5):");
+                    Integer n = traducirStringInt(numero);
+
+                    if (n != null && n >= 1 && n <= 5) {
+                            Consola.mostrarExito("Número válido: " + n);
+                        } else {
+                            Consola.mostrarError("Número fuera de rango (1-5): " + n);
+                        }
+
                     break;
-                case 2:
-                    Escaner.pedirString("2. Buscar por usuario");
+
+                case "2":
+                    String busquedaUsuario = Escaner.pedirString("Introduce el usuario a buscar:");
+                    Consola.mostrarString("Buscando incidencias del usuario: " + busquedaUsuario);
                     break;
-                case 3:
-                    Escaner.pedirString("3. Buscar por fecha");
+                case "3":
+                    String fecha = Escaner.pedirString("Introduce la fecha (dd/mm/yyyy):");
+                    Consola.mostrarString("Buscando incidencias en la fecha: " + fecha);
+                    break;
+                case "0":
+                    Consola.mostrarString("Saliendo del programa...");
+                    salir = true;
                     break;
                 default:
-                    Escaner.pedirString("Por favor, introduce una opción válida");
-
+                    Consola.mostrarError("Por favor, introduce una opción válida.");
+                    break;
             }
-//        String tipo = Escaner.pedirString("Tipo pokemon:");
-//        Consola.mostrarExito("Tipo recibido: " + tipo);
-//        String nombre = Escaner.pedirString("nombre pokemon: ");
-//
-//        ServicioFichero.guardar(tipo,nombre);
-//        ServicioFichero.guardar(new Pokemon(tipo,nombre));
-        }while(salir=false);
+
+        } while (!salir);
     }
+
+    private static Integer traducirStringInt(String valor) {
+        try {
+            return Integer.parseInt(valor);
+        } catch (NumberFormatException e) {
+            Consola.mostrarError("Valor inválido, no es un número: " + valor);
+            return null;
+        }
+    }
+
+
+    private static void ValidarRangoNum(){
+
+    }
+
+
+
 }
